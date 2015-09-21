@@ -7,8 +7,8 @@
 
 ###Team member
 
-toanht15 Hoang The Toan
-hung3102 Dao Van Hung
+1. toanht15 Hoang The Toan
+2. hung3102 Dao Van Hung
 
 
 
