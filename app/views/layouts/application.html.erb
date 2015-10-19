@@ -11,6 +11,7 @@
 <% if user_signed_in? %>
 <h3 style="color:red"> Hello, <%= current_user.email %></h3>
 <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<%= link_to "Goals", user_goals_path %>
 <% else %>
 <%= link_to "login", new_user_session_path %>
 <%= link_to "register", new_user_registration_path %>

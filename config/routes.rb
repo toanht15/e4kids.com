@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :user_goals
+  resources :user_goals
+  resources :user_goals
+  resources :user_goals
   resources :user_logs
   root 'static_pages#home'
 
