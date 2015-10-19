@@ -18,7 +18,9 @@
 <% end %>
 
 <hr>
-<%= yield %>
 
+<% flash.each do |type, message| %>
+  <strong><%= message %></strong>
+  <% end %>
 </body>
 </html>

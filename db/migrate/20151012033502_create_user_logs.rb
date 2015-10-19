@@ -4,7 +4,7 @@ class CreateUserLogs < ActiveRecord::Migration
       t.integer :user_id
       t.string :log_data
 
-      t.timestamps null: false
+      t.timestamps
     end
   end
 end
