@@ -7,4 +7,11 @@ class ApplicationController < ActionController::Base
   def set_current_user
     User.current_user = current_user
   end
+  
+  protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:signup).concat [:name, :gender, :age]
+    devise_parameter_sanitizer.for(:account_update).concat [:name, :gender, :age]
+    
+  end
 end

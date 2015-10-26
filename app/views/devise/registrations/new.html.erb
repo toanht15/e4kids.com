@@ -8,6 +8,22 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
+  #add info
+  <div class="field">
+    <%= f.label :name %> <br/>
+    <%= f.text_field :name %>
+  </div> 
+  
+  <div class="field">
+    <%= f.label :gender %> <br/>
+    <%= f.select :gender, options_for_select([ "Male", "Female"], resource.gender || "Male") %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :age %> <br/>
+    <%= f.select :age, options_for_select((10..99).to_a, resource.age || 25) %>
+  </div>
+
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>

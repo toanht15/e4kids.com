@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019045326) do
+ActiveRecord::Schema.define(version: 20151026015031) do
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20151019045326) do
   create_table "user_logs", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "log_data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,6 +53,9 @@ ActiveRecord::Schema.define(version: 20151019045326) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "name"
+    t.string   "gender"
+    t.integer  "age"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
