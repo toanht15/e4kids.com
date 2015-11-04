@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :user_goals
   resources :user_logs
   root 'static_pages#home'
-
+  #root2 'static_pages#index'
   devise_for :users
   #resources :books
   # The priority is based upon order of creation: first created -> highest priority.

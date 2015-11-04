@@ -1,4 +1,6 @@
+	<% unless user_signed_in? %>
 <div class="center jumbotron">
+
 	<h1>Welcome to the E4kids website</h1>
 
 	<h2>
@@ -7,11 +9,10 @@
 
 	<%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
 </div>
-
+	<% end %>
 <div>
 	<% if user_signed_in? %>
                 <h3 style="color:red"> Hello, <%= current_user.email %></h3>
-                <%= link_to "Logout", destroy_user_session_path, method: :delete %>
                 <%= link_to "Goals", user_goals_path %>
                 <% end %>
 </div>

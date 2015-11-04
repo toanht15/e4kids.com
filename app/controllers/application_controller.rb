@@ -7,4 +7,9 @@ class ApplicationController < ActionController::Base
   def set_current_user
     User.current_user = current_user
   end
+  
+  # def after_sign_in_path_for(resource)
+  #   redirect_to 'index'
+  # end
+
 end
