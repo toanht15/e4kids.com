@@ -71,4 +71,4 @@ class BooksController < ApplicationController
     def book_params
       params.require(:book).permit(:title, :number_of_pages)
     end
-end
+  end
