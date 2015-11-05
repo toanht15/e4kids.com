@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Workspace</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+	<title><%= full_title(yield(:title)) %></title>
+	<%= stylesheet_link_tag    'application', media: 'all',
+	'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
+	<%= render 'layouts/shim' %>
 </head>
 <body>
-
-<% if user_signed_in? %>
-<h3 style="color:red"> Hello, <%= current_user.email %></h3>
-<%= link_to "Logout", destroy_user_session_path, method: :delete %>
-<%= link_to "Goals", user_goals_path %>
-<% else %>
-<%= link_to "login", new_user_session_path %>
-<%= link_to "register", new_user_registration_path %>
-<% end %>
-<hr>
-   <% flash.each do |type, messages| %>
-      <strong><%= messages %></strong>
-   <% end %>
-<br>
-<%= yield %>
+	<%= render 'layouts/header' %>
+	<div class="container">
+		<% flash.each do |message_type, message| %>
+		<div class="alert alert-<%= message_type %>">
+			<%= message %>
+		</div>
+		<% end %>
+		<%= yield %>
+		<br>
+		<%= render 'layouts/footer' %>
+		<%= debug(params) if Rails.env.development?  %>
+	</div>
 
 </body>
 </html>
