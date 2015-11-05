@@ -72,4 +72,4 @@ class UserLogsController < ApplicationController
     def user_log_params
       params.require(:user_log).permit(:user_id, :log_data)
     end
-end
+  end
