@@ -8,6 +8,15 @@ class ApplicationController < ActionController::Base
     User.current_user = current_user
   end
   
+
+  private
+  def logged_in_user
+      unless user_signed_in?
+        #store_location
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
   protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:signup).concat [:name, :gender, :age]

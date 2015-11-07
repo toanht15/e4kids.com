@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
 
+  get 'users/index'
+
   resources :user_goals
   resources :user_logs
   root 'static_pages#home'
 
   devise_for :users
+  resources :users, only: [:index, :show] do
+    member do
+      get :following, :followers
+    end
+  end
+  resources :relationships,       only: [:create, :destroy]
 
   get 'home' => 'static_pages#home' 
   get 'help' => 'static_pages#help'
