@@ -2,7 +2,12 @@ class UsersController < ApplicationController
 	before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
 		:following, :followers]
 		def index
-			@users = User.paginate(page: params[:page])
+
+			if params[:search]
+				@users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page])
+			else
+				@users = User.paginate(page: params[:page])
+			end
 		end
 
 		def show
