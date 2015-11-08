@@ -9,6 +9,8 @@
 User.create!(name:                  "Hoang The Toan",
  email:                 "thetoanpr04@gmail.com",
  password:              "hoangthetoan",
+ age: 25, 
+ gender: "Male",
  confirmed_at: Time.zone.now
 )
 
@@ -16,9 +18,13 @@ User.create!(name:                  "Hoang The Toan",
   name  = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
   password = "password"
+  age = Faker::Number.between(15,50)
+  gender = "Male" 
   User.create!(name:  name,
    email: email,
    password:              password,
+   age: age,
+   gender: gender,
    confirmed_at: Time.zone.now
    )
 end

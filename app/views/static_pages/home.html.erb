@@ -1,12 +1,14 @@
+ 
+        
 
 
-<div class="center jumbotron">
-	<h1>Welcome to the e4kids</h1>
+  <div class="center jumbotron">
+  	<h1>Welcome to the e4kids</h1>
 
-	<h2>
-		E4kids has lots of free online games, songs, stories and activities for children to have fun and learn English.
-	</h2>
-	<% if !user_signed_in? %>
-	<%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
-	<% end %>
-</div>
+  	<h2>
+  		E4kids has lots of free online games, songs, stories and activities for children to have fun and learn English.
+  	</h2>
+  	<% if !user_signed_in? %>
+  	<%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+  	<% end %>
+  </div>

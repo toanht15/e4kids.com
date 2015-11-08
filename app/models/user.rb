@@ -28,5 +28,10 @@ class User < ActiveRecord::Base
   # Returns true if the current user is following the other user.
   def following?(other_user)
   	following.include?(other_user)
-  end                               
+  end   
+
+  def self.search(query)
+    # where(:title, query) -> This would return an exact match of the query
+    where("name like ? or email like ?", "%#{query}%", "%#{query}%") 
+  end                            
 end
