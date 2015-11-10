@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :vocabularies
+  resources :subjects
   get 'users/index'
 
   resources :user_goals

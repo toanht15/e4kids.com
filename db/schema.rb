@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107141904) do
+ActiveRecord::Schema.define(version: 20151110042104) do
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -30,6 +30,12 @@ ActiveRecord::Schema.define(version: 20151107141904) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id"
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id"
+
+  create_table "subjects", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "user_goals", force: :cascade do |t|
     t.integer  "numbers_of_words"
@@ -72,5 +78,15 @@ ActiveRecord::Schema.define(version: 20151107141904) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "vocabularies", force: :cascade do |t|
+    t.string   "word"
+    t.string   "mean"
+    t.integer  "subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "vocabularies", ["subject_id"], name: "index_vocabularies_on_subject_id"
 
 end
