@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  word: MyString
+  mean: MyString
+  subject_id: 
+
+two:
+  word: MyString
+  mean: MyString
+  subject_id: 

@@ -1,15 +1,20 @@
 Rails.application.routes.draw do
 
-  resources :vocabularies
+  
+  
+  resources :vocabularies do
+    resources :remembers
+  end
+ 
   resources :subjects
   get 'users/index'
-
+  
   resources :user_goals
   resources :user_logs
   root 'static_pages#home'
 
   devise_for :users
-  resources :users, only: [:index, :show] do
+  resources :users, only: [:index, :show, :chart] do
     member do
       get :following, :followers
     end
@@ -20,6 +25,8 @@ Rails.application.routes.draw do
   get 'help' => 'static_pages#help'
   get 'about'=> 'static_pages#about'
   get 'contact'=> 'static_pages#contact'
+
+  get 'chart' => 'users#chart'
   #resources :books
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

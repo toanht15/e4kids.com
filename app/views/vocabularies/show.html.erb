@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+	<strong>Word:</strong>
+	<%= @vocabulary.word %>
+</p>
+
+<p>
+	<strong>Mean:</strong>
+	<%= @vocabulary.mean %>
+</p>
+
+<p>
+	<strong>Subject:</strong>
+	<%= @vocabulary.subject.name %>
+</p>
+
+<% if current_user.remembers.where(:vocabulary_id => @vocabulary.id).present? %>
+<button type="button" class="btn btn-lg btn-primary" disabled="disabled">Remembered</button>
+<% else %>
+<%= form_for current_user.remembers.build, :url => vocabulary_remembers_path(@vocabulary) do |f| %>
+<%= f.submit "Remembered", class: "btn btn-primary" %>
+<% end %>
+<% end %>
+
+
+<%= link_to 'Edit', edit_vocabulary_path(@vocabulary) %> |
+<%= link_to 'Back', vocabularies_path %>

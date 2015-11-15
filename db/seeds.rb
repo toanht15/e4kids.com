@@ -36,3 +36,35 @@ following = users[2..30]
 followers = users[3..20]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+10.times do |n|
+  name = Faker::Lorem.word
+  Subject.create(name: name)
+end
+
+Subject.all.each do |n|
+  30.times do |m|
+  word = Faker::Lorem.word
+  mean = Faker::Lorem.sentence(2)
+  Vocabulary.create(
+    word: word,
+    mean: mean,
+    subject_id: n.id)
+end
+end
+
+100.times do |m|
+  Remember.create(
+    user_id: 1,
+    vocabulary_id: m+1,
+    created_at: DateTime.now - (2+ Random.rand(6)).days)
+end
+
+User.all.each do |u|
+  100.times do |m|
+  Remember.create(
+    user_id: u.id,
+    vocabulary_id: m+1,
+    created_at: DateTime.now - (2+ Random.rand(8)).days)
+end
+end

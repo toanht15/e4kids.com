@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
 		def show
 			@user = User.find(params[:id])
+			@users = @user.remembers.group('date(created_at)')
 		end
 
 		def following
@@ -26,6 +27,10 @@ class UsersController < ApplicationController
 			@user  = User.find(params[:id])
 			@users = @user.followers.paginate(page: params[:page])
 			render 'show_follow'
+		end
+
+		def chart
+			
 		end
 		
 		private

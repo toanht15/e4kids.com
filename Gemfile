@@ -30,6 +30,11 @@ gem 'faker'
 
 gem 'will_paginate',           '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
+
+gem 'chartkick', '~> 1.2.4'
+gem 'groupdate', '~> 2.1.1'
+gem 'active_median', '~> 0.1.0'
+gem 'mysql2', '~> 0.3.18'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
