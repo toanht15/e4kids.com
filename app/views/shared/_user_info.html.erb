@@ -1,0 +1,6 @@
+<%= link_to gravatar_for(@user ||= current_user, size: 50), @user %>
+<h1><%= @user.name %></h1>
+<span>
+  Learned
+  <%= pluralize(@user.lessons.map{|lesson| lesson.learned_words_count}.sum, "word") %>
+</span>

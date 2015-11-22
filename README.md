@@ -1,6 +1,4 @@
 
-
-
 #Welcome to e4kids.com
 
 ##Team: Ci
@@ -12,5 +10,3 @@
 3. nguyenhaininh Nguyen Hai Ninh
 4. dangbinh93x Dang Xuan Binh
 5. manhtuongbkhn Nguyen Manh Tuong
-
-

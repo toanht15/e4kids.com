@@ -1,45 +1,60 @@
 class UsersController < ApplicationController
-	before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
-		:following, :followers]
-		def index
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update]
 
-			if params[:search]
-				@users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page])
-			else
-				@users = User.paginate(page: params[:page])
-			end
-		end
+  def index
+    @users = User.paginate page: params[:page]
+  end
 
-		def show
-			@user = User.find(params[:id])
-			@users = @user.remembers.group('date(created_at)')
-		end
+  def new
+    @user = User.new
+  end
 
-		def following
-			@title = "Following"
-			@user  = User.find(params[:id])
-			@users = @user.following.paginate(page: params[:page])
-			render 'show_follow'
-		end
+  def create
+    @user = User.new user_params
+    if @user.save
+      log_in @user
+      flash[:success] = t("messages.welcome")
+      redirect_to @user
+    else
+      render :new
+    end
+  end
 
-		def followers
-			@title = "Followers"
-			@user  = User.find(params[:id])
-			@users = @user.followers.paginate(page: params[:page])
-			render 'show_follow'
-		end
+  def show
+    @user = User.find params[:id]
+    @lessons = @user.lessons.paginate page: params[:page]
+  end
 
-		def chart
-			
-		end
-		
-		private
+  def edit
+    @user = User.find params[:id]
+  end
 
-		def logged_in_user
-			unless user_signed_in?
-				#store_location
-				flash[:danger] = "Please log in."
-				redirect_to login_url
-			end
-		end
-	end
+  def update
+    @user = User.find params[:id]
+    if @user.update_attributes user_params
+      flash[:success] = t("messages.update.success")
+      redirect_to @user
+    else
+      render :edit
+    end
+  end
+
+  def chart
+    
+  end
+
+  private
+  def user_params
+    params.require(:user).permit :name, :email, :password, :password_confirmation
+  end
+
+  def correct_user
+    @user = User.find params[:id]
+    redirect_to(root_url) unless current_user?(@user)
+  end
+
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
+end

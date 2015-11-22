@@ -1,33 +1,36 @@
 Rails.application.routes.draw do
 
-  
-  
-  resources :vocabularies do
-    resources :remembers
-  end
- 
-  resources :subjects
-  get 'users/index'
-  
-  resources :user_goals
-  resources :user_logs
-  root 'static_pages#home'
-
-  devise_for :users
-  resources :users, only: [:index, :show, :chart] do
-    member do
-      get :following, :followers
-    end
-  end
-  resources :relationships,       only: [:create, :destroy]
-
-  get 'home' => 'static_pages#home' 
-  get 'help' => 'static_pages#help'
-  get 'about'=> 'static_pages#about'
-  get 'contact'=> 'static_pages#contact'
+  root "static_pages#home"
+  get "help" => "static_pages#help"
+  get "about" => "static_pages#about"
+  get "contact" => "static_pages#contact"
+  get "signup" => "users#new"
+  get "login" => "sessions#new"
+  post "login" => "sessions#create"
+  delete "logout" => "sessions#destroy"
 
   get 'chart' => 'users#chart'
-  #resources :books
+
+
+  resources :users, except: :destroy do
+    resources :words
+    match "/:relationship" => "relationships#index", as: :relationship,
+      via: :get, constraints: {relationship: /(following|followers)/}
+  end
+  resources :relationships, only: [:create, :destroy]
+  resources :lessons, only: [:create, :show, :destroy, :update] do
+    resources :answers
+  end
+  resources :courses, only: :index do
+    resources :lessons
+  end
+  namespace :admin do
+    resources :imports, only: :create
+    resources :users
+    resources :courses
+    resources :words
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

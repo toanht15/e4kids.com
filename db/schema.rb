@@ -11,14 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110062442) do
+ActiveRecord::Schema.define(version: 20150617103039) do
 
-  create_table "books", force: :cascade do |t|
-    t.string   "title",           limit: 255
-    t.integer  "number_of_pages", limit: 4
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+  create_table "answers", force: :cascade do |t|
+    t.integer  "lesson_id",  limit: 4
+    t.integer  "option_id",  limit: 4
+    t.integer  "word_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
+
+  add_index "answers", ["lesson_id"], name: "index_answers_on_lesson_id", using: :btree
+  add_index "answers", ["option_id"], name: "index_answers_on_option_id", using: :btree
+  add_index "answers", ["word_id"], name: "index_answers_on_word_id", using: :btree
+
+  create_table "courses", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "lessons", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "progress",   limit: 4
+    t.integer  "user_id",    limit: 4
+    t.integer  "course_id",  limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "lessons", ["course_id"], name: "index_lessons_on_course_id", using: :btree
+  add_index "lessons", ["name", "user_id", "course_id"], name: "index_lessons_on_name_and_user_id_and_course_id", unique: true, using: :btree
+  add_index "lessons", ["user_id", "course_id", "created_at"], name: "index_lessons_on_user_id_and_course_id_and_created_at", using: :btree
+  add_index "lessons", ["user_id"], name: "index_lessons_on_user_id", using: :btree
+
+  create_table "options", force: :cascade do |t|
+    t.string   "content",    limit: 255
+    t.boolean  "correct",    limit: 1,   default: false
+    t.integer  "word_id",    limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "options", ["word_id"], name: "index_options_on_word_id", using: :btree
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "follower_id", limit: 4
@@ -31,70 +67,37 @@ ActiveRecord::Schema.define(version: 20151110062442) do
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
-  create_table "remembers", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4
-    t.integer  "vocabulary_id", limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  create_table "subjects", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "user_goals", force: :cascade do |t|
-    t.integer  "numbers_of_words", limit: 4
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "user_id",          limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  create_table "user_logs", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "log_data",   limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "confirmation_token",     limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "name",                   limit: 255
-    t.string   "gender",                 limit: 255
-    t.integer  "age",                    limit: 4
+    t.string   "name",              limit: 255
+    t.string   "email",             limit: 255
+    t.string   "password_digest",   limit: 255
+    t.string   "remember_digest",   limit: 255
+    t.string   "reset_digest",      limit: 255
+    t.datetime "reset_sent_at"
+    t.string   "activation_digest", limit: 255
+    t.boolean  "activated",         limit: 1,   default: false
+    t.datetime "activated_at"
+    t.boolean  "admin",             limit: 1,   default: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "vocabularies", force: :cascade do |t|
-    t.string   "word",       limit: 255
-    t.string   "mean",       limit: 255
-    t.integer  "subject_id", limit: 4
+  create_table "words", force: :cascade do |t|
+    t.string   "content",    limit: 255
+    t.integer  "course_id",  limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
-  add_index "vocabularies", ["subject_id"], name: "index_vocabularies_on_subject_id", using: :btree
+  add_index "words", ["course_id"], name: "index_words_on_course_id", using: :btree
 
-  add_foreign_key "vocabularies", "subjects"
+  add_foreign_key "answers", "lessons"
+  add_foreign_key "answers", "options"
+  add_foreign_key "answers", "words"
+  add_foreign_key "lessons", "courses"
+  add_foreign_key "lessons", "users"
+  add_foreign_key "options", "words"
+  add_foreign_key "words", "courses"
 end

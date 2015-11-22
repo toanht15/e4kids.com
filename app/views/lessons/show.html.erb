@@ -1,0 +1,30 @@
+<% provide :title, "Lesson-#{@lesson.course.name}" %>
+<h1><%= @lesson.course.name %></h1>
+<div id="lesson_stats" data-num-words="<%= @lesson.words.count %>">
+  <%= @lesson.answers.select{|answer| !answer.option.nil?}.count %>/
+  <%= @lesson.words.count %>
+</div>
+
+<%= form_for(@lesson) do |f| %>
+  <%= f.fields_for :answers do |ff| %>
+    <div class ="row">
+      <aside class ="col-md-4">
+        <h3><%= ff.object.word.content %></h3>
+      </aside>
+      <aside class="col-md-8">
+        <% ff.object.word.print_options.each do |option| %>
+          <div class = "radio" %>
+            <div class = "col-md-2">
+              <%= ff.radio_button :option_id, option.id, onclick: "countChecked();" %>
+            </div>
+            <div class="col-md-2">
+              <%= label :options_id, option.content %>
+            </div>
+          </div>
+        <% end %>
+      </aside>
+    </div>
+    <hr>
+  <% end %>
+  <%= f.submit t("layouts.submit"), class: "btn btn-primary" %>
+<% end %>
