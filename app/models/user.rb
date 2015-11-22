@@ -63,6 +63,11 @@ class User < ActiveRecord::Base
     Lesson.learned_lessons(id,following_ids)
   end
 
+  def self.search(query)
+    # where(:title, query) -> This would return an exact match of the query
+    where("name like ? or email like ?", "%#{query}%", "%#{query}%") 
+  end 
+
   private
   def downcase_email
     self.email = email.downcase
