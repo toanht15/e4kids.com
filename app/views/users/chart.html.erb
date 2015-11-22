@@ -1,0 +1,9 @@
+<div class="row">
+
+  <!-- Line Chart - Single Series -->
+  <div class="col-xs-6">
+    <h3>Words by day</h3>
+    <%= line_chart current_user.answers.group(:created_at).count, discrete: true %>
+  </div>
+
+</div>
